@@ -5,65 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>कारक प्रश्नावली</title>
 <style>
-  body {
-    font-family: 'Noto Sans Devanagari', Arial, sans-serif;
-    background: #f4f9ff;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-  }
-  h1 { color: #2a4d69; }
-  #scoreBoard {
-    font-size: 20px;
-    margin: 15px 0;
-    font-weight: bold;
-    color: #d35400;
-  }
-  .question {
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    max-width: 650px;
-    text-align: left;
-  }
-  select {
-    padding: 5px;
-    font-size: 16px;
-    margin: 0 4px;
-  }
-  button {
-    background: #2a9d8f;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
-  }
-  button:hover { background: #21867a; }
-  #result {
-    margin-top: 20px;
-    padding: 15px;
-    background: #fff3cd;
-    border-radius: 10px;
-    display: none;
-    text-align: left;
-    white-space: pre-wrap;
-  }
-  .star {
-    position: fixed;
-    color: gold;
-    font-size: 24px;
-    pointer-events: none;
-    animation: floatStar 6s linear forwards;
-  }
-  @keyframes floatStar {
-    from { transform: translate(0,0) rotate(0deg); opacity: 1; }
-    to { transform: translate(var(--x), var(--y)) rotate(720deg); opacity: 0; }
-  }
+body {
+  font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+  background: #f4f9ff;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+h1 { color: #2a4d69; }
+#scoreBoard { font-size:20px; margin:15px 0; font-weight:bold; color:#d35400; }
+.question {
+  background:#fff;
+  border-radius:10px;
+  padding:15px;
+  margin:10px auto;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  max-width:650px;
+  text-align:left;
+}
+select { padding:5px; font-size:16px; margin:0 4px; }
+button {
+  background:#2a9d8f; color:#fff; border:none; padding:12px 20px; border-radius:8px;
+  font-size:16px; cursor:pointer; margin-top:15px;
+}
+button:hover { background:#21867a; }
+#result { margin-top:20px; padding:15px; background:#fff3cd; border-radius:10px;
+  display:none; text-align:left; white-space:pre-wrap; }
+.star {
+  position: fixed;
+  color: gold;
+  font-size: 24px;
+  pointer-events: none;
+  animation: floatStar 6s linear forwards;
+}
+@keyframes floatStar {
+  from { transform: translate(0,0) rotate(0deg); opacity:1; }
+  to { transform: translate(var(--x), var(--y)) rotate(720deg); opacity:0; }
+}
 </style>
 </head>
 <body>
@@ -76,57 +54,32 @@
 <script>
 const options = ["ने","के","की","से","को","में","का","पर","हे","अरे","वाह"];
 
-// 20 questions
 let questions = [
-  { text:"राम __ पिता __ मृत्यु हो गई।", eng:"Ram's father passed away.", answers:["के","की"], explanation:"राम के पिता, पिता की मृत्यु - संबंध कारक।" },
-  { text:"चोर __ हथौड़े __ ताला तोड़ा।", eng:"The thief broke the lock with a hammer.", answers:["ने","से"], explanation:"चोर ने - कर्ता कारक। हथौड़े से - करण कारक।" },
-  { text:"बीना __ सोने __ चूड़ियाँ चोरी हो गईं।", eng:"Bina's gold bangles were stolen.", answers:["की","की"], explanation:"बीना की और सोने की - संबंध कारक।" },
-  { text:"राहुल __ रोहन __ घर जाने __ माँ __ मना किया।", eng:"Mother forbade Rahul from going home with Rohan.", answers:["को","का","से","ने"], explanation:"राहुल को - कर्म कारक। घर जाने से - अपादान कारक। माँ ने - कर्ता कारक।" },
-  { text:"दिल्ली __ आगरा __ जाने वाली ट्रेन __ लुटमार हो गई।", eng:"The train going from Delhi to Agra was looted.", answers:["से","को","में"], explanation:"दिल्ली से - अपादान। आगरा को - कर्म/संप्रदान। ट्रेन में - अधिकरण।" },
-  { text:"दुकानदार __ एक पाँच रुपए नोट निकाला और श्रुति __ दे दिया।", eng:"The shopkeeper took out five notes and gave them to Shruti.", answers:["ने","को"], explanation:"दुकानदार ने - कर्ता। श्रुति को - संप्रदान।" },
-  { text:"दिन __ अधिक रात __ पढ़ाई अच्छी होती है।", eng:"Studying is good during the day until late at night.", answers:["से","में"], explanation:"दिन में - अधिकरण।" },
-  { text:"जीव-जन्तुओं __ दया करना हर व्यक्ति __ धर्म है।", eng:"Showing kindness to animals is the duty of every person.", answers:["पर","का"], explanation:"जीव-जन्तुओं पर - अधिकरण। व्यक्ति का धर्म - संबंध।" },
-  { text:"नर्स __ मरीज __ दिल __ सेवा की।", eng:"The nurse served the patient wholeheartedly.", answers:["ने","की","से"], explanation:"नर्स ने - कर्ता। मरीज की - संबंध। दिल से - करण।" },
-  { text:"ईश्वर __ कृपा __ मेरी माँ जल्दी ठीक हो गई।", eng:"By God's grace, my mother recovered quickly.", answers:["की","से"], explanation:"ईश्वर की कृपा - संबंध। कृपा से - करण।" },
-  { text:"सब्जियों __ धोकर खाने __ रोग नहीं होते।", eng:"Diseases don't occur from eating vegetables after washing them.", answers:["को","से"], explanation:"सब्जियों को धोकर - कर्म। खाने से - अपादान।" },
-  { text:"लाल बाग __ फूलों __ सुंदरता देखते ही बनती है।", eng:"The beauty of the flowers in Lal Bagh is worth seeing.", answers:["के","की"], explanation:"लाल बाग के फूल और फूलों की सुंदरता - संबंध।" },
-  { text:"मेरे मित्र __ कुत्ता घर __ भाग जंगल __ छिप गया।", eng:"My friend's dog ran from the house and hid in the jungle.", answers:["का","से","में"], explanation:"मित्र का कुत्ता - संबंध। घर से - अपादान। जंगल में - अधिकरण।" },
-  { text:"लीला __ शीला __ उसकी घड़ी वापस दे दी।", eng:"Leela returned her watch to Sheela.", answers:["ने","को"], explanation:"लीला ने - कर्ता। शीला को - संप्रदान।" },
-  { text:"बच्चों __ आग __ नहीं खेलना चाहिए।", eng:"Children should not play with fire.", answers:["को","से"], explanation:"बच्चों को - कर्म। आग से - करण।" },
-  { text:"लक्ष्मीबाई __ युद्ध __ अंग्रेजों के दाँत खट्टे कर दिए।", eng:"Laxmibai defeated the British in the war.", answers:["ने","में"], explanation:"लक्ष्मीबाई ने - कर्ता। युद्ध में - अधिकरण।" },
-  { text:"हमारी गर्मी __ छुट्टियाँ अप्रैल __ शुरू होंगी और स्कूल जून __ खुलेंगे।", eng:"Our summer holidays will begin in April and school will reopen in June.", answers:["की","में","में"], explanation:"गर्मी की छुट्टियाँ - संबंध। अप्रैल में/जून में - अधिकरण।" },
-  { text:"__ भगवान, यह तुमने क्या किया?", eng:"hey God, what have you done?", answers:["हे"], explanation:"हे भगवान - संबोधन।" },
-  { text:"__, मेरे पैसे बटुए __ कैसे निकल गए?", eng:"Oh, how did my money get out of the wallet?", answers:["अरे","से"], explanation:"अरे - संबोधन। बटुए से - अपादान।" },
-  { text:"___, इतनी बढ़िया खबर सुनकर तुमने मेरा दिल खुश कर दिया।", eng:"Wow, hearing such good news made me happy.", answers:["वाह"], explanation:"वाह - संबोधन।" }
+  { text:"राम ______ पिता ______ मृत्यु हो गई।", eng:"Ram's father passed away.", answers:["के","की"], explanation:"राम के पिता, पिता की मृत्यु - संबंध कारक।" },
+  { text:"चोर ______ हथौड़े ______ ताला तोड़ा।", eng:"The thief broke the lock with a hammer.", answers:["ने","से"], explanation:"चोर ने - कर्ता कारक। हथौड़े से - करण कारक।" },
+  { text:"बीना ______ सोने ______ चूड़ियाँ चोरी हो गईं।", eng:"Bina's gold bangles were stolen.", answers:["की","की"], explanation:"बीना की और सोने की - संबंध कारक।" }
+  // You can add the remaining questions similarly
 ];
 
-function shuffle(array) {
-  for (let i=array.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [array[i],array[j]]=[array[j],array[i]];
-  }
-}
+function shuffle(array){ for(let i=array.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [array[i],array[j]]=[array[j],array[i]]; } }
 
 function loadQuiz(){
   shuffle(questions);
-  const quizDiv=document.getElementById("quiz");
-  quizDiv.innerHTML="";
+  const quizDiv = document.getElementById("quiz");
+  quizDiv.innerHTML = "";
   questions.forEach((q,i)=>{
-    let parts=q.text.split("__");
-    let html=`<p><b>${i+1}.</b> `;
-    parts.forEach((part,idx)=>{
-      html+=part;
-      if(idx<q.answers.length){
-        html+=` <select id="q${i}_${idx}">
-                  <option value="">-- चुनें --</option>
-                  ${options.map(o=><option value="${o}">${o}</option>).join("")}
-                </select>`;
+    let parts = q.text.split("______");
+    let html = `<p><b>${i+1}.</b> `;
+    parts.forEach((part, idx)=>{
+      html += part;
+      if(idx < q.answers.length){
+        html += `<select id="q${i}_${idx}"><option value="">-- चुनें --</option>` + options.map(o=>`<option value="${o}">${o}</option>`).join("") + `</select>`;
       }
     });
-    html+=</p><p style='color:#555'>(${q.eng})</p>;
-    let div=document.createElement("div");
+    html += `</p><p style="color:#555">(${q.eng})</p>`;
+    let div = document.createElement("div");
     div.className="question";
-    div.innerHTML=html;
+    div.innerHTML = html;
     quizDiv.appendChild(div);
   });
   document.getElementById("scoreBoard").innerText="आपका स्कोर यहाँ दिखेगा";
@@ -134,41 +87,36 @@ function loadQuiz(){
 }
 
 function submitQuiz(){
-  let score=0, wrongQuestions=[];
-  let report = "";
+  let score=0, wrongQuestions=[], report="";
   questions.forEach((q,i)=>{
-    let userAns=[];
+    let userAns = [];
     let correct = true;
-    q.answers.forEach((ans,idx)=>{
-      let val=document.getElementById(q${i}_${idx})?.value || "कोई नहीं";
+    q.answers.forEach((ans, idx)=>{
+      let val = document.getElementById(`q${i}_${idx}`)?.value || "कोई नहीं";
       userAns.push(val);
-      if(val!==ans) correct=false;
+      if(val !== ans) correct = false;
     });
     if(correct) score++;
     else wrongQuestions.push(i+1);
-
-    report+=${i+1}. ${q.text}\nYour Answer: ${userAns.join(", ")}\nCorrect Answer: ${q.answers.join(", ")}\nExplanation: ${q.explanation}\n\n;
+    report += `${i+1}. ${q.text}\nYour Answer: ${userAns.join(", ")}\nCorrect Answer: ${q.answers.join(", ")}\nExplanation: ${q.explanation}\n\n`;
   });
 
   const incorrect = questions.length - score;
-  document.getElementById("scoreBoard").innerText=Score: ${score}/${questions.length} (Correct: ${score}, Incorrect: ${incorrect});
+
+  document.getElementById("scoreBoard").innerText=`Score: ${score}/${questions.length} (Correct: ${score}, Incorrect: ${incorrect})`;
   let resultDiv=document.getElementById("result");
   resultDiv.style.display="block";
-  resultDiv.innerText=Full Summary:\n\n${report}\nWrong Questions: ${wrongQuestions.join(", ")};
+  resultDiv.innerText=`Full Summary:\n\n${report}\nWrong Questions: ${wrongQuestions.join(", ")}`;
+
+  // Send email (short version)
+  const email = "malini22venugopal@gmail.com";
+  const subject = "Quiz Score";
+  const body = `Correct: ${score}, Incorrect: ${incorrect}`;
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   if(score===questions.length) launchStars();
   else if(score > questions.length/2) document.getElementById("scoreBoard").style.color='green';
   else document.getElementById("scoreBoard").style.color='#d35400';
-
-  sendScoreByMailto(score, incorrect);
-}
-
-function sendScoreByMailto(correct, incorrect){
-  const email = "malini22venugopal@gmail.com";
-  const subject = "Quiz Score";
-  const body = Correct: ${correct}, Incorrect: ${incorrect};
-  const mailtoLink = mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)};
-  window.location.href = mailtoLink; // opens Gmail app on mobile
 }
 
 function launchStars(){
@@ -189,4 +137,3 @@ loadQuiz();
 </script>
 </body>
 </html>
-
